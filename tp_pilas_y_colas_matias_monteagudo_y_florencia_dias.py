@@ -213,7 +213,7 @@ class Estanteria():
       if libroARevisarAhora.codigo == codigoLibro:
         libroAPrestar = libroARevisarAhora
       else:
-        pilaDeLibrosNacionalesDesapilados.apilar(libroARevisarAhora)
+        pilaDeLibrosInternacionalesDesapilados.apilar(libroARevisarAhora)
     while not pilaDeLibrosInternacionalesDesapilados.esVacía():
       self.pilaDeLibrosInternacionales.apilar(pilaDeLibrosInternacionalesDesapilados.desapilar())
     return libroAPrestar
