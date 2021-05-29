@@ -224,10 +224,10 @@ class Estanteria():
     cantidadNacionales = 0
     cantidadInternacionales = 0
     while not librosNacionalesAux.esVacía():
-      libroAMirar = librosNacionalesAux.desapilar()
+      librosNacionalesAux.desapilar()
       cantidadNacionales += 1
     while not librosInternacionalesAux.esVacía():
-      libroAMirar = librosInternacionalesAux.desapilar()
+      librosInternacionalesAux.desapilar()
       cantidadInternacionales += 1
     return cantidadNacionales,cantidadInternacionales
 
