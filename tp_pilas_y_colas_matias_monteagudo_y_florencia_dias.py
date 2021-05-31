@@ -354,10 +354,9 @@ class EscritorioDeAtencion():
           resultadoFila,resultadoColumna = posFila,posColumna
     return resultadoFila,resultadoColumna
 
-  def guardarLibros(self,colaDelibros):
-    librosAGuardar = colaDelibros.clonar()
-    while not librosAGuardar.esVacía():
-      self.deposito[self.estanteriaMenosRecargada()].guardarLibro(librosAGuardar.desencolar())
+  def guardarLibros(self,colaDeLibros):
+    while not colaDeLibros.esVacía():
+      self.deposito[self.estanteriaMenosRecargada()].guardarLibro(colaDeLibros.desencolar())
 
   def sacarLibros(self,colaDeLibros):
     nroFila,nroColumna = self.deposito.shape
