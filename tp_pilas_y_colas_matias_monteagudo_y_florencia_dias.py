@@ -361,7 +361,7 @@ class EscritorioDeAtencion():
   def sacarLibros(self,colaDeLibros):
     nroFila,nroColumna = self.deposito.shape
     colaCodigos = colaDeLibros.clonar()
-    PilaEncontrados = Cola()
+    PilaEncontrados = Pila()
     for posFila in range(nroFila):
       for posColumna in range(nroColumna):
         cantidadDeCodigosABuscarAcá = colaCodigos.tamañoCola()
