@@ -361,21 +361,21 @@ class EscritorioDeAtencion():
   def sacarLibros(self,colaDeLibros):
     nroFila,nroColumna = self.deposito.shape
     colaCodigos = colaDeLibros.clonar()
-    PilaEncontrados = Pila()
+    pilaEncontrados = Pila()
     for posFila in range(nroFila):
       for posColumna in range(nroColumna):
         cantidadDeCodigosABuscarAcá = colaCodigos.tamañoCola()
         while self.deposito[posFila,posColumna] and cantidadDeCodigosABuscarAcá > 0:
           libroEncontrado = self.deposito[posFila,posColumna].buscarLibro(colaCodigos.obtener())
           if libroEncontrado:
-            PilaEncontrados.apilar(libroEncontrado)
+            pilaEncontrados.apilar(libroEncontrado)
             colaCodigos.desencolar()
             libroEncontrado = None
           else:
             codigoNoEncontrado = colaCodigos.desencolar()
             colaCodigos.encolar(codigoNoEncontrado)
           cantidadDeCodigosABuscarAcá -= 1
-    return PilaEncontrados
+    return pilaEncontrados
 
   def moverLibro(self,codigoLibro, nroEstanteriaOrigen, nroEstanteriaDestino):
     nroFila,nroColumna = self.deposito.shape
