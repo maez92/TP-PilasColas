@@ -361,21 +361,21 @@ class EscritorioDeAtencion():
   def sacarLibros(self,colaDeLibros):
     nroFila,nroColumna = self.deposito.shape
     colaCodigos = colaDeLibros.clonar()
-    colaEncontrados = Cola()
+    PilaEncontrados = Cola()
     for posFila in range(nroFila):
       for posColumna in range(nroColumna):
         cantidadDeCodigosABuscarAcá = colaCodigos.tamañoCola()
         while self.deposito[posFila,posColumna] and cantidadDeCodigosABuscarAcá > 0:
           libroEncontrado = self.deposito[posFila,posColumna].buscarLibro(colaCodigos.obtener())
           if libroEncontrado:
-            colaEncontrados.encolar(libroEncontrado)
+            PilaEncontrados.apilar(libroEncontrado)
             colaCodigos.desencolar()
             libroEncontrado = None
           else:
             codigoNoEncontrado = colaCodigos.desencolar()
             colaCodigos.encolar(codigoNoEncontrado)
           cantidadDeCodigosABuscarAcá -= 1
-    return colaEncontrados
+    return PilaEncontrados
 
   def moverLibro(self,codigoLibro, nroEstanteriaOrigen, nroEstanteriaDestino):
     nroFila,nroColumna = self.deposito.shape
@@ -388,18 +388,3 @@ class EscritorioDeAtencion():
       for posColumna in range(nroColumna):
         if libroAMover and self.deposito[posFila,posColumna] and self.deposito[posFila,posColumna].nroEstanteria() == nroEstanteriaDestino:
           self.deposito[posFila,posColumna].guardarLibro(libroAMover)
-
-"""# Entrega
-La entrega del trabajo práctico debe ser:
-
-Un informe escrito (doc, pdf. etc), incluyendo:
-
-Descripción de cada una de las estructuras de datos diseñadas e implementadas.
-Incluir una descripción escrita de los algoritmos. Pueden incluir diagramas de fujo.
-
-Descripción de la implementación en Python. Explicar claramente que hace cada función y procedimiento implementados.
-
-Código completo y comentado de la implementación.
-
-Opcional: Video explicando cómo funciona el algoritmo.
-"""
