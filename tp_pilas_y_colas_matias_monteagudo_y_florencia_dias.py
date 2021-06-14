@@ -10,16 +10,16 @@ Original file is located at
 """
 
 from enum import Enum
-
-class GeneroLibro(int,Enum):
+ 
+class GeneroLibro(int,Enum): 
   Teatro = 0
   Poesia = 1
   Narracion = 2
-
+ 
 Teatro = GeneroLibro.Teatro
 Poesía = GeneroLibro.Poesia
 Narración = GeneroLibro.Narracion
-
+ 
 print('Nombre:',Teatro.name)
 print('Valor:',Teatro.value)
 print('Tipo:',Teatro)
@@ -32,8 +32,8 @@ class TipoLibro(int,Enum):
   Nacional= 0
   Internacional = 1
 
-Internacional = TipoLibro.Internacional
-Nacional = TipoLibro.Nacional
+#Internacional = TipoLibro.Internacional
+#Nacional = TipoLibro.Nacional
 
 print('Tipo:',Internacional)
 print('Nombre:',Internacional.name)
@@ -56,6 +56,9 @@ class Libro():
 
   def nacionalidadDeAutor(self):
     return self.nacionalidadDeAutor
+
+  def esNacional(self):
+    return self.nacionalidadDeAutor == TipoLibro.Nacional
 
   def genero(self):
     return self.genero
@@ -133,7 +136,7 @@ class Estanteria():
 
   def __repr__(self):
     cadenaPrint = 'E' + str(self.nroDeEstanteria) + '(N:' + str(self.pilaDeLibrosNacionales.tamaño()) \
-                  + ',I:' + str(self.pilaDeLibrosInternacionales.tamaño()) + ',CC:' + str(self.cantidadCritica) + ')'
+    + ',I:' + str(self.pilaDeLibrosInternacionales.tamaño()) + ',CC:' + str(self.cantidadCritica) + ')'
     return cadenaPrint
   
   def cantidadTotalDeLibros(self):
@@ -145,15 +148,9 @@ class Estanteria():
 
   def guardarLibro(self,libro):
     if not self.esCritica():
-      if libro.nacionalidadDeAutor == Nacional:
-        self.pilaDeLibrosNacionales.apilar(libro)
-      elif libro.nacionalidadDeAutor == Internacional:
-        self.pilaDeLibrosInternacionales.apilar(libro)
+      guardarLibroEn(libro,self.pilaDeLibrosNacionales,self.pilaDeLibrosInternacionales)
     else:
-      if libro.nacionalidadDeAutor == Nacional:
-        self.pilaDeLibrosNacionales.apilar(libro)
-      elif libro.nacionalidadDeAutor == Internacional:
-        self.pilaDeLibrosInternacionales.apilar(libro)
+      guardarLibroEn(libro,self.pilaDeLibrosNacionales,self.pilaDeLibrosInternacionales)
       print("Se guardo el libro pero la capacidad de la estanteria es critica")
 
   def primerLibroDisponible(self):
@@ -165,84 +162,39 @@ class Estanteria():
     return primerLibro
     
   def libroParaRecomendar(self, generoDeLibro):
-    pilaDeLibrosNacionalesAux = self.pilaDeLibrosNacionales.clonarPila()
-    pilaDeLibrosInternacionalesAux = self.pilaDeLibrosInternacionales.clonarPila()
-    libroARevisarAhora = None
     libroRecomendado = None
-    while not pilaDeLibrosNacionalesAux.esVacía() and not libroRecomendado:
-      libroARevisarAhora = pilaDeLibrosNacionalesAux.desapilar()
-      if libroARevisarAhora.genero == generoDeLibro:
-        libroRecomendado = libroARevisarAhora
-    while not pilaDeLibrosInternacionalesAux.esVacía() and not libroRecomendado:
-      libroARevisarAhora = pilaDeLibrosInternacionalesAux.desapilar()
-      if libroARevisarAhora.genero == generoDeLibro:
-        libroRecomendado = libroARevisarAhora
+    while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
+      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosNacionales,generoDeLibro)
+    while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
+      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosInternacionales,generoDeLibro)
     return libroRecomendado
 
   def buscarLibro(self,codigoLibro):
-    pilaDeLibrosNacionalesAux = self.pilaDeLibrosNacionales.clonarPila()
-    pilaDeLibrosInternacionalesAux = self.pilaDeLibrosInternacionales.clonarPila()
-    libroARevisarAhora = None
     libroEncontrado = None
-    while not pilaDeLibrosNacionalesAux.esVacía() and not libroEncontrado:
-      libroARevisarAhora = pilaDeLibrosNacionalesAux.desapilar()
-      if libroARevisarAhora.codigo == codigoLibro:
-        libroEncontrado = libroARevisarAhora
-    while not pilaDeLibrosInternacionalesAux.esVacía() and not libroEncontrado:
-      libroARevisarAhora = pilaDeLibrosInternacionalesAux.desapilar()
-      if libroARevisarAhora.codigo == codigoLibro:
-        libroEncontrado = libroARevisarAhora
+    if not libroEncontrado:
+      libroEncontrado = mostrarLibroSiEstaEnPila(self.pilaDeLibrosNacionales,codigoLibro)
+    if not libroEncontrado:
+      libroEncontrado = mostrarLibroSiEstaEnPila(self.pilaDeLibrosInternacionales,codigoLibro)
     return libroEncontrado
 
-  def prestarLibro(self,codigoLibro):                                    # Desapila libros de la estanteria hasta encontrarlo, luego los vuelve a apilar excepto al que presto.
-    pilaDeLibrosNacionalesDesapilados = Pila()
-    pilaDeLibrosInternacionalesDesapilados = Pila()
-    libroARevisarAhora = None
+  def prestarLibro(self,codigoLibro):
     libroAPrestar = None
-    while not self.pilaDeLibrosNacionales.esVacía() and not libroAPrestar:        # Mientras no es vacia la pila original y no hay libro a prestar:
-      libroARevisarAhora = self.pilaDeLibrosNacionales.desapilar()                # Desapila el ultimo libro y lo pone en la variable para revisarlo
-      if libroARevisarAhora.codigo == codigoLibro:                                # Si el codigo del libro a revisar ahora coincide
-        libroAPrestar = libroARevisarAhora                                        # Lo guarda en la variable de libro a prestar
-      else:                                                                       # Sino
-        pilaDeLibrosNacionalesDesapilados.apilar(libroARevisarAhora)              # Lo guarda en la variable de libros apilados
-    while not pilaDeLibrosNacionalesDesapilados.esVacía():                        # Mientras no esta vacía la pila de libros desapilados:
-      libroQueApilar = pilaDeLibrosNacionalesDesapilados.desapilar()              # Desapila un libro de la variable auxiliar en una variable para apilar
-      self.pilaDeLibrosNacionales.apilar(libroQueApilar)                          # y lo vuelve a apilar en la pila original.
-    while not self.pilaDeLibrosInternacionales.esVacía() and not libroAPrestar:
-      libroARevisarAhora = self.pilaDeLibrosInternacionales.desapilar()
-      if libroARevisarAhora.codigo == codigoLibro:
-        libroAPrestar = libroARevisarAhora
-      else:
-        pilaDeLibrosInternacionalesDesapilados.apilar(libroARevisarAhora)
-    while not pilaDeLibrosInternacionalesDesapilados.esVacía():
-      self.pilaDeLibrosInternacionales.apilar(pilaDeLibrosInternacionalesDesapilados.desapilar())
+    if not libroAPrestar:
+        libroAPrestar = retirarLibroSiEstaEnPila(self.pilaDeLibrosNacionales,codigoLibro)
+    if not libroAPrestar:
+        libroAPrestar = retirarLibroSIEstaEnPila(self.pilaDeLibrosInternacionales,codigoLibro)
     return libroAPrestar
 
   def librosPorTipo(self):
-    librosNacionalesAux = self.pilaDeLibrosNacionales.clonarPila()
-    librosInternacionalesAux = self.pilaDeLibrosInternacionales.clonarPila()
-    cantidadNacionales = 0
-    cantidadInternacionales = 0
-    while not librosNacionalesAux.esVacía():
-      librosNacionalesAux.desapilar()
-      cantidadNacionales += 1
-    while not librosInternacionalesAux.esVacía():
-      librosInternacionalesAux.desapilar()
-      cantidadInternacionales += 1
+    cantidadNacionales = self.pilaDeLibrosNacionales.tamaño()
+    cantidadInternacionales = self.pilaDeLibrosInternacionales.tamaño()
     return cantidadNacionales,cantidadInternacionales
 
   def librosPorGenero(self,generoLibro):
     librosNacionalesAux = self.pilaDeLibrosNacionales.clonarPila()
     librosInternacionalesAux = self.pilaDeLibrosInternacionales.clonarPila()
-    cantidadDeLibros = 0
-    while not librosNacionalesAux.esVacía():
-      libroAMirar = librosNacionalesAux.desapilar()
-      if libroAMirar.genero == generoLibro:
-        cantidadDeLibros += 1
-    while not librosInternacionalesAux.esVacía():
-      libroAMirar = librosInternacionalesAux.desapilar()
-      if libroAMirar.genero == generoLibro:
-        cantidadDeLibros += 1
+    cantidadDeLibros = cantidadDeLibrosDeGenero(librosNacionalesAux,generoLibro) + \
+                       cantidadDeLibrosDeGenero(librosInternacionalesAux,generoLibro)
     return cantidadDeLibros
 
   def nroEstanteria(self):
@@ -262,6 +214,66 @@ def validaCantidadCritica(cantidadCritica):
     return cantidadCritica
   else:
     raise Exception('La cantidad critica debe ser un número entero.')
+
+def guardarLibroEn(libro,pilaNacional,pilaInternacional):
+  if libro.esNacional():
+    pilaNacional.apilar(libro)
+  else:
+    pilaInternacional.apilar(libro)
+
+def primerLibroDeGenero(pilaDeLibros,genero):
+  pilaAux = pila()
+  primerLibroDeGenero = None
+  while not pilaDeLibros.esVacía() and not primerLibroDeGenero:
+    primerLibroDeGenero = libroSiEsDeGenero(pilaDeLibros.obtener(),genero)
+    pilaAux.apilar(pilaDeLibros.desapilar())
+  while not pilaAux.esVacía():
+    pilaDeLibros.apilar(pilaAux.desapilar())
+  return primerLibroDeGenero
+
+def libroSiEsDeGenero(libro,genero):
+  if esLibroDeGenero(libro,genero):
+    return libro
+
+def esLibroDeGenero(libro,genero):
+  return libro.genero() == genero
+
+def mostrarLibroSiEstaEnPila(pilaDeLibros,codigo):
+  pilaAux = Pila()
+  libroConElCodigo = None
+  while not pilaDeLibros.esVacía() and not libroConElCodigo:
+    libroConElCodigo = libroSiTieneCodigo(pilaDeLibros.obtener(),codigo)
+    pilaAux.apilar(pilaDeLibros.desapilar())
+  apilarEnPila(pilaAux,pilaDeLibros)
+  return libroConElCodigo
+
+def apilarEnPila(unaPila,otraPila):
+    while not unaPila.esVacía():
+        otraPila.apilar(unaPila.desapilar())
+
+def libroSiTieneCodigo(libro,codigo):
+  if esLibroConCodigo(libro,codigo):
+    return libro
+
+def esLibroConCodigo(libro,codigo):
+  return libro.codigo() == codigo
+
+def retirarLibroSiEstaEnPila(pilaDeLibros,codigoLibro):
+    pilaAux = Pila()
+    libroConElCodigo = None
+    while not pilaDeLibros.esVacía() and not libroConElCodigo:
+        if not esLibroConCodigo(pilaDeLibros.obtener(),codigoLibro):
+            pilaAux.apilar(pilaDeLibros.desapilar())
+        else:
+            libroConElCodigo = libroSiTieneCodigo(pilaDeLibros.desapilar(),codigo)
+    apilarEnPila(pilaAux,pilaDeLibros)
+    return libroConElCodigo
+
+def cantidadDeLibrosDeGenero(pilaDeLibros,genero):
+    cantidad = 0
+    while not pilaDeLibros.esVacía():
+        if esLibroDeGenero(pilaDeLibros.desapilar(),genero):
+            cantidad += 1
 
 """# Implementación del TDA Cola"""
 
@@ -308,15 +320,12 @@ import numpy as np
  
 class EscritorioDeAtencion():
   def __init__(self,cantidadDeFilas,cantidadDeColumnas):
-    self.deposito = np.zeros([cantidadDeFilas,cantidadDeColumnas],dtype=object)
-    for nroFila in range(cantidadDeFilas):
-      for nroColumna in range(cantidadDeColumnas):
-        self.deposito[nroFila,nroColumna] = None
+    self.deposito = np.empty([cantidadDeFilas,cantidadDeColumnas],dtype=Estanteria)
  
   def __repr__(self):
     return str(self.deposito)
  
-  def establecerEstanteria(self,nroFila, nroColumna, estanteria):
+  def establecerEstanteria(self,nroFila,nroColumna,estanteria):
     self.deposito[nroFila,nroColumna] = estanteria
 
   def cantidadDeEstanteriasCriticas(self,nroFila,nroColumna=0):
@@ -336,14 +345,18 @@ class EscritorioDeAtencion():
   def estanteriaMenosRecargada(self):
     nroFila,nroColumna = self.deposito.shape
     mejorEstanteriaFila,mejorEstanteriaColumna = None,None
-    mejorPorcentajeOcupación = 100
+    mejorPorcentajeOcupación = None
     for posFila in range(nroFila):
       for posColumna in range(nroColumna):
         if self.deposito[posFila,posColumna]:
+          if mejorPorcentajeOcupación != None:                                                            #Si no hay un mejor porcentaje, establece como el mejor, al de la primera estanteria enontrada.
+            mejorPorcentajeOcupación = self.deposito[posFila,posColumna].porcentajeOcupaciónNacional() 
+            mejorEstanteriaFila,mejorEstanteriaColumna = posFila,posColumna
           if self.deposito[posFila,posColumna].porcentajeOcupaciónNacional() < mejorPorcentajeOcupación:
             mejorPorcentajeOcupación = self.deposito[posFila,posColumna].porcentajeOcupaciónNacional() 
             mejorEstanteriaFila,mejorEstanteriaColumna = posFila,posColumna
     return mejorEstanteriaFila,mejorEstanteriaColumna
+    
 
   def buscaEstanteria(self,nroEstanteria):
     nroFila,nroColumna = self.deposito.shape
@@ -377,14 +390,8 @@ class EscritorioDeAtencion():
           cantidadDeCodigosABuscarAcá -= 1
     return pilaEncontrados
 
-  def moverLibro(self,codigoLibro, nroEstanteriaOrigen, nroEstanteriaDestino):
-    nroFila,nroColumna = self.deposito.shape
-    libroAMover = None
-    for posFila in range(nroFila):
-      for posColumna in range(nroColumna):
-        if self.deposito[posFila,posColumna] and self.deposito[posFila,posColumna].nroEstanteria() == nroEstanteriaOrigen:
-          libroAMover = self.deposito[posFila,posColumna].prestarLibro(codigoLibro)
-    for posFila in range(nroFila):
-      for posColumna in range(nroColumna):
-        if libroAMover and self.deposito[posFila,posColumna] and self.deposito[posFila,posColumna].nroEstanteria() == nroEstanteriaDestino:
-          self.deposito[posFila,posColumna].guardarLibro(libroAMover)
+  def moverLibro(self,codigoLibro,nroEstanteriaOrigen,nroEstanteriaDestino):
+    estanteriaOrigen = self.buscaEstanteria(nroEstanteriaOrigen)
+    estanteriaDestino = self.buscaEstanteria(nroEstanteriaDestino)
+    libroAMover = self.deposito[estanteriaOrigen].prestarLibro(codigoLibro)
+    self.deposito[estanteriaDestino].guardarLibro(libroAMover)
