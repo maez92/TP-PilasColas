@@ -208,7 +208,7 @@ def guardarLibroEn(libro,pilaNacional,pilaInternacional):
     pilaInternacional.apilar(libro)
 
 def primerLibroDeGenero(pilaDeLibros,genero):
-  pilaAux = pila()
+  pilaAux = Pila()
   primerLibroDeGenero = None
   while not pilaDeLibros.esVacía() and not primerLibroDeGenero:
     primerLibroDeGenero = libroSiEsDeGenero(pilaDeLibros.obtener(),genero)
