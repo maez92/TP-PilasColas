@@ -222,7 +222,7 @@ def libroSiEsDeGenero(libro,genero):
     return libro
 
 def esLibroDeGenero(libro,genero):
-  return libro.genero() == genero
+  return libro.generoLibro() == genero
 
 def mostrarLibroSiEstaEnPila(pilaDeLibros,codigo):
   pilaAux = Pila()
