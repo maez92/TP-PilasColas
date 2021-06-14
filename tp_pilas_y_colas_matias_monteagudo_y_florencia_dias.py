@@ -24,9 +24,6 @@ class TipoLibro(int,Enum):
   Nacional= 0
   Internacional = 1
 
-print('Tipo:',Internacional)
-print('Nombre:',Internacional.name)
-
 """# Implementación del TDA Libro"""
 
 class Libro():
