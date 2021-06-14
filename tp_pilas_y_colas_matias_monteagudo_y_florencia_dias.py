@@ -46,10 +46,10 @@ class Libro():
   def esNacional(self):
     return self.nacionalidadDeAutor == TipoLibro.Nacional
 
-  def genero(self):
+  def generoLibro(self):
     return self.genero
 
-  def codigo(self):
+  def codigoLibro(self):
     return self.codigo
 
 def validaCodigo(codigo):
