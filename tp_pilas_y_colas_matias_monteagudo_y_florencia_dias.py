@@ -15,14 +15,6 @@ class GeneroLibro(int,Enum):
   Teatro = 0
   Poesia = 1
   Narracion = 2
- 
-Teatro = GeneroLibro.Teatro
-Poesía = GeneroLibro.Poesia
-Narración = GeneroLibro.Narracion
- 
-print('Nombre:',Teatro.name)
-print('Valor:',Teatro.value)
-print('Tipo:',Teatro)
 
 """# Implementación del TDA TipoLibro"""
 
@@ -31,9 +23,6 @@ from enum import Enum
 class TipoLibro(int,Enum):  
   Nacional= 0
   Internacional = 1
-
-#Internacional = TipoLibro.Internacional
-#Nacional = TipoLibro.Nacional
 
 print('Tipo:',Internacional)
 print('Nombre:',Internacional.name)
