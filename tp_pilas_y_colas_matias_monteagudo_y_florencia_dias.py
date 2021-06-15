@@ -183,7 +183,7 @@ class Estanteria():
     if not libroAPrestar:
       libroAPrestar = retirarLibroSiEstaEnPila(self.pilaDeLibrosNacionales,codigoLibro)
     if not libroAPrestar:
-      libroAPrestar = retirarLibroSIEstaEnPila(self.pilaDeLibrosInternacionales,codigoLibro)
+      libroAPrestar = retirarLibroSiEstaEnPila(self.pilaDeLibrosInternacionales,codigoLibro)
     return libroAPrestar
 
   def librosPorTipo(self):
