@@ -351,10 +351,10 @@ class EscritorioDeAtencion():
     for posFila in range(nroFila):
       for posColumna in range(nroColumna):
         if self.deposito[posFila,posColumna]:
-          if mejorPorcentajeOcupación != None:                                                            #Si no hay un mejor porcentaje, establece como el mejor, al de la primera estanteria enontrada.
+          if mejorPorcentajeOcupación == None:                                                            #Si no hay un mejor porcentaje, establece como el mejor, al de la primera estanteria enontrada.
             mejorPorcentajeOcupación = self.deposito[posFila,posColumna].porcentajeOcupaciónNacional() 
             mejorEstanteriaFila,mejorEstanteriaColumna = posFila,posColumna
-          if self.deposito[posFila,posColumna].porcentajeOcupaciónNacional() < mejorPorcentajeOcupación:
+          elif self.deposito[posFila,posColumna].porcentajeOcupaciónNacional() < mejorPorcentajeOcupación:
             mejorPorcentajeOcupación = self.deposito[posFila,posColumna].porcentajeOcupaciónNacional() 
             mejorEstanteriaFila,mejorEstanteriaColumna = posFila,posColumna
     return mejorEstanteriaFila,mejorEstanteriaColumna
