@@ -166,9 +166,9 @@ class Estanteria():
   def prestarLibro(self,codigoLibro):
     libroAPrestar = None
     if not libroAPrestar:
-        libroAPrestar = retirarLibroSiEstaEnPila(self.pilaDeLibrosNacionales,codigoLibro)
+      libroAPrestar = retirarLibroSiEstaEnPila(self.pilaDeLibrosNacionales,codigoLibro)
     if not libroAPrestar:
-        libroAPrestar = retirarLibroSIEstaEnPila(self.pilaDeLibrosInternacionales,codigoLibro)
+      libroAPrestar = retirarLibroSIEstaEnPila(self.pilaDeLibrosInternacionales,codigoLibro)
     return libroAPrestar
 
   def librosPorTipo(self):
@@ -234,32 +234,32 @@ def mostrarLibroSiEstaEnPila(pilaDeLibros,codigo):
   return libroConElCodigo
 
 def apilarEnPila(unaPila,otraPila):
-    while not unaPila.esVacía():
-        otraPila.apilar(unaPila.desapilar())
+  while not unaPila.esVacía():
+    otraPila.apilar(unaPila.desapilar())
 
 def libroSiTieneCodigo(libro,codigo):
   if esLibroConCodigo(libro,codigo):
     return libro
 
 def esLibroConCodigo(libro,codigo):
-  return libro.codigo() == codigo
+  return libro.codigoLibro() == codigo
 
 def retirarLibroSiEstaEnPila(pilaDeLibros,codigoLibro):
-    pilaAux = Pila()
-    libroConElCodigo = None
-    while not pilaDeLibros.esVacía() and not libroConElCodigo:
-        if not esLibroConCodigo(pilaDeLibros.obtener(),codigoLibro):
-            pilaAux.apilar(pilaDeLibros.desapilar())
-        else:
-            libroConElCodigo = libroSiTieneCodigo(pilaDeLibros.desapilar(),codigo)
-    apilarEnPila(pilaAux,pilaDeLibros)
-    return libroConElCodigo
+  pilaAux = Pila()
+  libroConElCodigo = None
+  while not pilaDeLibros.esVacía() and not libroConElCodigo:
+    if not esLibroConCodigo(pilaDeLibros.obtener(),codigoLibro):
+      pilaAux.apilar(pilaDeLibros.desapilar())
+    else:
+      libroConElCodigo = libroSiTieneCodigo(pilaDeLibros.desapilar(),codigo)
+  apilarEnPila(pilaAux,pilaDeLibros)
+  return libroConElCodigo
 
 def cantidadDeLibrosDeGenero(pilaDeLibros,genero):
-    cantidad = 0
-    while not pilaDeLibros.esVacía():
-        if esLibroDeGenero(pilaDeLibros.desapilar(),genero):
-            cantidad += 1
+  cantidad = 0
+  while not pilaDeLibros.esVacía():
+    if esLibroDeGenero(pilaDeLibros.desapilar(),genero):
+      cantidad += 1
 
 """# Implementación del TDA Cola"""
 
