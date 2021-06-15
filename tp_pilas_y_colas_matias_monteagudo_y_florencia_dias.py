@@ -267,7 +267,7 @@ def retirarLibroSiEstaEnPila(pilaDeLibros,codigoLibro):
     if not esLibroConCodigo(pilaDeLibros.obtener(),codigoLibro):
       pilaAux.apilar(pilaDeLibros.desapilar())
     else:
-      libroConElCodigo = libroSiTieneCodigo(pilaDeLibros.desapilar(),codigo)
+      libroConElCodigo = libroSiTieneCodigo(pilaDeLibros.desapilar(),codigoLibro)
   apilarEnPila(pilaAux,pilaDeLibros)
   return libroConElCodigo
 
