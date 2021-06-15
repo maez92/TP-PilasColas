@@ -147,12 +147,27 @@ class Estanteria():
       primerLibro = self.pilaDeLibrosInternacionales.obtener()
     return primerLibro
     
-  def libroParaRecomendar(self, generoDeLibro):
+  #def libroParaRecomendar(self, generoDeLibro):
+  #  libroRecomendado = None
+  #  while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
+  #    libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosNacionales,generoDeLibro)
+  #  while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
+  #    libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosInternacionales,generoDeLibro)
+  #  return libroRecomendado
+
+  def libroParaRecomendar(self,generoDeLibro):
+    pilaDeLibrosNacionalesAux = self.pilaDeLibrosNacionales.clonarPila()
+    pilaDeLibrosInternacionalesAux = self.pilaDeLirosInternacionales.clonarPila()
+    libroARevisarAhora = None
     libroRecomendado = None
-    while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
-      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosNacionales,generoDeLibro)
-    while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
-      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosInternacionales,generoDeLibro)
+    while not pilaDeLibrosNacionalesAux.esVacía() and not libroRecomendado:
+      libroARevisarAhora = pilaDeLibrosNacionalesAux.desapilar()
+      if libroARevisarAhora.generoLibro() == generoDeLibro:
+        libroRecomendado = libroARevisarAhora
+    while not pilaDeLibrosInternacionalesAux.esVacía() and not libroRecomendado:
+      libroARevisarAhora = pilaDeLibrosInternacionalesAux.desapilar()
+      if libroARevisarAhora.generoLibro() == generoDeLibro:
+        libroRecomendado = libroARevisarAhora
     return libroRecomendado
 
   def buscarLibro(self,codigoLibro):
