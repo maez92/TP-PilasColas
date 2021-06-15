@@ -157,7 +157,7 @@ class Estanteria():
 
   def libroParaRecomendar(self,generoDeLibro):
     pilaDeLibrosNacionalesAux = self.pilaDeLibrosNacionales.clonarPila()
-    pilaDeLibrosInternacionalesAux = self.pilaDeLirosInternacionales.clonarPila()
+    pilaDeLibrosInternacionalesAux = self.pilaDeLibrosInternacionales.clonarPila()
     libroARevisarAhora = None
     libroRecomendado = None
     while not pilaDeLibrosNacionalesAux.esVacía() and not libroRecomendado:
