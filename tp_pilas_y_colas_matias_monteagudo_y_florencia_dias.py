@@ -171,15 +171,15 @@ class Estanteria():
   def libroParaRecomendar(self,generoDeLibro):
     libroARecomendar = None
     if libroARecomendar == None:
-      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosNacionales,genero)
+      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosNacionales,generoDeLibro)
     elif libroARecomendar == None:
-      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosInternacionales,genero)
+      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosInternacionales,generoDeLibro)
 
-  def primerLibroDeGeneroEnPila(pilaDeLibros,genero):
+  def primerLibroDeGeneroEnPila(pilaDeLibros,generoDeLibro):
     pilaAux = Pila()
     while not pilaDeLibros.esVacía():
       libroARevisarAhora = pilaDeLibros.desapilar()
-      if libroSiEsDeGenero(libroARevisarAhora,genero):
+      if libroSiEsDeGenero(libroARevisarAhora,generoDeLibro):
         return libroARevisarAhora
       else:
         pilaAux.apilar(libroARevisarAhora)
