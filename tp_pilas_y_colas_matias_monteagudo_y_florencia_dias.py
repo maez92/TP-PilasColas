@@ -394,4 +394,5 @@ class EscritorioDeAtencion():
     estanteriaOrigen = self.buscaEstanteria(nroEstanteriaOrigen)
     estanteriaDestino = self.buscaEstanteria(nroEstanteriaDestino)
     libroAMover = self.deposito[estanteriaOrigen].prestarLibro(codigoLibro)
-    self.deposito[estanteriaDestino].guardarLibro(libroAMover)
+    if libroAMover != None:
+      self.deposito[estanteriaDestino].guardarLibro(libroAMover)
