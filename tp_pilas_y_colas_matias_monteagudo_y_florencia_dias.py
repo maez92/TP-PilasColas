@@ -108,6 +108,10 @@ class Pila:
   def __repr__(self):
     return str(self.pila)
 
+def apilarEnPila(unaPila,otraPila):
+  while not unaPila.esVacía():
+    otraPila.apilar(unaPila.desapilar())
+
 """# Implementación del TDA Estanteria"""
 
 class Estanteria():
@@ -147,43 +151,13 @@ class Estanteria():
       primerLibro = self.pilaDeLibrosInternacionales.obtener()
     return primerLibro
     
-  #def libroParaRecomendar(self, generoDeLibro):
-  #  libroRecomendado = None
-  #  while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
-  #    libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosNacionales,generoDeLibro)
-  #  while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
-  #    libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosInternacionales,generoDeLibro)
-  #  return libroRecomendado
-
-  #def libroParaRecomendar(self,generoDeLibro):
-  #  libroARevisarAhora = None
-  #  libroRecomendado = None
-  #  while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
-  #    libroARevisarAhora = self.pilaDeLibrosNacionales.desapilar()
-  #    if libroARevisarAhora.generoLibro() == generoDeLibro:
-  #      libroRecomendado = libroARevisarAhora
-  #  while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
-  #    libroARevisarAhora = self.pilaDeLibrosInternacionales.desapilar()
-  #    if libroARevisarAhora.generoLibro() == generoDeLibro:
-  #      libroRecomendado = libroARevisarAhora
-  #  return libroRecomendado
-
-  def libroParaRecomendar(self,generoDeLibro):
-    libroARecomendar = None
-    if libroARecomendar == None:
-      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosNacionales,generoDeLibro)
-    elif libroARecomendar == None:
-      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosInternacionales,generoDeLibro)
-
-  def primerLibroDeGeneroEnPila(pilaDeLibros,generoDeLibro):
-    pilaAux = Pila()
-    while not pilaDeLibros.esVacía():
-      libroARevisarAhora = pilaDeLibros.desapilar()
-      if libroSiEsDeGenero(libroARevisarAhora,generoDeLibro):
-        return libroARevisarAhora
-      else:
-        pilaAux.apilar(libroARevisarAhora)
-    apilarEnPila(pilaAux,pilaDeLibros)
+  def libroParaRecomendar(self, generoDeLibro):
+    libroRecomendado = None
+    while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
+      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosNacionales,generoDeLibro)
+    while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
+      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosInternacionales,generoDeLibro)
+    return libroRecomendado
 
   def buscarLibro(self,codigoLibro):
     libroEncontrado = None
@@ -263,10 +237,6 @@ def mostrarLibroSiEstaEnPila(pilaDeLibros,codigo):
     pilaAux.apilar(pilaDeLibros.desapilar())
   apilarEnPila(pilaAux,pilaDeLibros)
   return libroConElCodigo
-
-def apilarEnPila(unaPila,otraPila):
-  while not unaPila.esVacía():
-    otraPila.apilar(unaPila.desapilar())
 
 def libroSiTieneCodigo(libro,codigo):
   if esLibroConCodigo(libro,codigo):
