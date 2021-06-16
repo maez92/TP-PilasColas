@@ -155,18 +155,35 @@ class Estanteria():
   #    libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosInternacionales,generoDeLibro)
   #  return libroRecomendado
 
-  def libroParaRecomendar(self,generoDeLibro):
-    libroARevisarAhora = None
-    libroRecomendado = None
-    while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
-      libroARevisarAhora = self.pilaDeLibrosNacionales.desapilar()
-      if libroARevisarAhora.generoLibro() == generoDeLibro:
-        libroRecomendado = libroARevisarAhora
-    while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
-      libroARevisarAhora = self.pilaDeLibrosInternacionales.desapilar()
-      if libroARevisarAhora.generoLibro() == generoDeLibro:
-        libroRecomendado = libroARevisarAhora
-    return libroRecomendado
+  #def libroParaRecomendar(self,generoDeLibro):
+  #  libroARevisarAhora = None
+  #  libroRecomendado = None
+  #  while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
+  #    libroARevisarAhora = self.pilaDeLibrosNacionales.desapilar()
+  #    if libroARevisarAhora.generoLibro() == generoDeLibro:
+  #      libroRecomendado = libroARevisarAhora
+  #  while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
+  #    libroARevisarAhora = self.pilaDeLibrosInternacionales.desapilar()
+  #    if libroARevisarAhora.generoLibro() == generoDeLibro:
+  #      libroRecomendado = libroARevisarAhora
+  #  return libroRecomendado
+
+  def libroParRecomendar(self,generoDeLibro):
+    libroARecomendar = None
+    if libroARecomendar == None:
+      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosNacionales,genero)
+    elif libroARecomendar == None:
+      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosInternacionales,genero)
+
+  def primerLibroDeGeneroEnPila(pilaDeLibros,genero):
+    pilaAux = Pila()
+    while not pilaDeLibros.esVacía():
+      libroARevisarAhora = pilaDeLibros.desapilar()
+      if libroSiEsDeGenero(libroARevisarAhora,genero):
+        return libroARevisarAhora
+      else:
+        pilaAux.apilar(libroARevisarAhora)
+    apilarEnPila(pilaAux,pilaDeLibros)
 
   def buscarLibro(self,codigoLibro):
     libroEncontrado = None
