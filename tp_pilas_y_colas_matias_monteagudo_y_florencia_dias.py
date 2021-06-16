@@ -168,7 +168,7 @@ class Estanteria():
   #      libroRecomendado = libroARevisarAhora
   #  return libroRecomendado
 
-  def libroParRecomendar(self,generoDeLibro):
+  def libroParaRecomendar(self,generoDeLibro):
     libroARecomendar = None
     if libroARecomendar == None:
       libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosNacionales,genero)
