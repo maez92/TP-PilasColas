@@ -157,6 +157,7 @@ class Estanteria():
       libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosNacionales,generoDeLibro)
     elif libroARecomendar == None:
       libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosInternacionales,generoDeLibro)
+    return libroARecomendar
 
   def buscarLibro(self,codigoLibro):
     libroEncontrado = None
