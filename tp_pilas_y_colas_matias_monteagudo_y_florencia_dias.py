@@ -137,11 +137,12 @@ class Estanteria():
     return self.pilaDeLibrosNacionales.tamaño() > self.cantidadCritica or self.pilaDeLibrosInternacionales.tamaño() > self.cantidadCritica
 
   def guardarLibro(self,libro):
-    if not self.esCritica():
-      guardarLibroEn(libro,self.pilaDeLibrosNacionales,self.pilaDeLibrosInternacionales)
-    else:
-      guardarLibroEn(libro,self.pilaDeLibrosNacionales,self.pilaDeLibrosInternacionales)
-      print("Se guardo el libro pero la capacidad de la estanteria es critica")
+    if isinstance(libro,Libro):
+      if not self.esCritica():
+        guardarLibroEn(libro,self.pilaDeLibrosNacionales,self.pilaDeLibrosInternacionales)
+      else:
+        guardarLibroEn(libro,self.pilaDeLibrosNacionales,self.pilaDeLibrosInternacionales)
+        print("Se guardo el libro pero la capacidad de la estanteria es critica")
 
   def primerLibroDisponible(self):
     primerLibro = None
