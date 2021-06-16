@@ -151,13 +151,12 @@ class Estanteria():
       primerLibro = self.pilaDeLibrosInternacionales.obtener()
     return primerLibro
     
-  def libroParaRecomendar(self, generoDeLibro):
-    libroRecomendado = None
-    while not self.pilaDeLibrosNacionales.esVacía() and not libroRecomendado:
-      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosNacionales,generoDeLibro)
-    while not self.pilaDeLibrosInternacionales.esVacía() and not libroRecomendado:
-      libroRecomendado = primerLibroDeGenero(self.pilaDeLibrosInternacionales,generoDeLibro)
-    return libroRecomendado
+  def libroParaRecomendar(self,generoDeLibro):
+    libroARecomendar = None
+    if libroARecomendar == None:
+      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosNacionales,generoDeLibro)
+    elif libroARecomendar == None:
+      libroARecomendar = primerLibroDeGeneroEnPila(self.pilaDeLibrosInternacionales,generoDeLibro)
 
   def buscarLibro(self,codigoLibro):
     libroEncontrado = None
@@ -211,16 +210,15 @@ def guardarLibroEn(libro,pilaNacional,pilaInternacional):
   else:
     pilaInternacional.apilar(libro)
 
-def primerLibroDeGenero(pilaDeLibros,genero):
+def primerLibroDeGeneroEnPila(pilaDeLibros,generoDeLibro):
   pilaAux = Pila()
-  primerLibroDeGenero = None
-  while not pilaDeLibros.esVacía() and not primerLibroDeGenero:
-    ultimoLibro = pilaDeLibros.desapilar()
-    primerLibroDeGenero = libroSiEsDeGenero(ultimoLibro,genero)
-    pilaAux.apilar(ultimoLibro)
-  while not pilaAux.esVacía():
-    pilaDeLibros.apilar(pilaAux.desapilar())
-  return primerLibroDeGenero
+  while not pilaDeLibros.esVacía():
+    libroARevisarAhora = pilaDeLibros.desapilar()
+    if libroSiEsDeGenero(libroARevisarAhora,generoDeLibro):
+      return libroARevisarAhora
+    else:
+      pilaAux.apilar(libroARevisarAhora)
+  apilarEnPila(pilaAux,pilaDeLibros)
 
 def libroSiEsDeGenero(libro,genero):
   if esLibroDeGenero(libro,genero):
