@@ -261,6 +261,7 @@ def cantidadDeLibrosDeGenero(pilaDeLibros,genero):
   while not pilaDeLibros.esVacía():
     if esLibroDeGenero(pilaDeLibros.desapilar(),genero):
       cantidad += 1
+  return cantidad
 
 """# Implementación del TDA Cola"""
 
